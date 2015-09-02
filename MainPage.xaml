@@ -1,0 +1,34 @@
+﻿<Page
+    x:Class="CompiledBindingsDemo.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CompiledBindingsDemo"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <local:ConverterExample x:Name="ThatsMyConverter"/>
+    </Page.Resources>
+
+    <StackPanel x:Name="stkp" Orientation="Vertical" Tag="Lorem Ipsum">
+
+        <TextBlock FontSize="40" Text="{x:Bind stkp.Tag}" HorizontalAlignment="Center" />
+        
+        <ListView ItemsSource="{x:Bind manager}" Width="500" Height="500"
+                  BorderThickness="1" BorderBrush="Black">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="local:Employee">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="{x:Bind Name,Converter={StaticResource ThatsMyConverter}}" x:Phase="1" />
+                    <TextBlock Text="{x:Bind Organization}" x:Phase="3" />
+                    <TextBlock Text="{x:Bind Age,Mode=OneWay}" x:Phase="2" />
+                        <Button Click="{x:Bind Poke}" Content="Добавить год"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </StackPanel>
+    
+</Page>
